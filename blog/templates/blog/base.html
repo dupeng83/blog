@@ -1,0 +1,30 @@
+{% load staticfiles %}
+{% load blog_tags %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <link href="{% static "css/blog.css" %}" rel="stylesheet">
+</head>
+<body>
+    <div id="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+    <div id="sidebar">
+        <h2>我的博客</h2>
+        <p>这是我的博客. 到现在为止已经发表了{% total_posts %} 篇文章</p>
+
+        <h3>最新文章</h3>
+        {% show_latest_posts 3 %}
+
+        <h3>获最多评论的文章</h3>
+        {% get_most_commented_posts as most_commented_posts %}
+        <ul>
+        {% for post in most_commented_posts %}
+            <li><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></li>
+        {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
